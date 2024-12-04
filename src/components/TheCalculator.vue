@@ -1,33 +1,44 @@
 <template>
   <div class="calculator">
     <h1>Mortgage Calculator</h1>
-    <form action="">
+    <form action="" @submit.prevent="calculateLoan">
       <small>mortgage amount</small>
       <div class="form-control">
         <div>
           <span class="fas fa-sterling-sign sign"></span>
-          <input type="text" />
+          <input type="text" v-model.trim="data.amount" />
         </div>
       </div>
       <div class="form-control">
         <small>mortgage term</small>
         <div class="terms-child">
-          <input type="text" />
+          <input type="text" v-model.trim="data.years" />
           <span class="sign">years</span>
         </div>
         <small>mortgage interest</small>
         <div class="terms-child">
-          <input type="text" />
+          <input type="text" v-model.trim="data.percentage" />
           <span class="sign">%</span>
         </div>
       </div>
       <div class="radio-group">
         <label>
-          <input type="radio" name="mortgageType" value="repayment" checked />
+          <input
+            type="radio"
+            name="mortgageType"
+            value="repayment"
+            checked
+            v-model="data.repayment"
+          />
           Repayment
         </label>
         <label>
-          <input type="radio" name="mortgageType" value="interestOnly" />
+          <input
+            type="radio"
+            name="mortgageType"
+            value="interestOnly"
+            v-model="data.interest"
+          />
           Interest Only
         </label>
       </div>
@@ -37,6 +48,27 @@
     </form>
   </div>
 </template>
+
+<script setup>
+import { reactive } from 'vue';
+const emit = defineEmits(['sumbitData']);
+const data = reactive({
+  amount: '',
+  years: '',
+  percentage: '',
+  repayment: false,
+  interest: false,
+});
+
+const calculateLoan = () => {
+  emit('sumbitData', data);
+  data.amount = '';
+  data.years = '';
+  data.percentage = '';
+  data.repayment = false;
+  data.interest = false;
+};
+</script>
 
 <style scoped>
 h1 {

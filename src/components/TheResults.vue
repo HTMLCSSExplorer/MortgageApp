@@ -1,12 +1,25 @@
 <template>
   <div class="result">
     <img src="../assets/images/illustration-empty.svg" alt="" />
-    <h2>results here!</h2>
+
+    <h2 v-if="Object.keys(props.monthlyPay).length === 0">
+      Results will be shows here
+    </h2>
+    <h2 v-else>
+      <span class="fas fa-sterling-sign"></span>
+      <span>{{ props.monthlyPay }}</span>
+    </h2>
     <p>
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi, pariatur!
     </p>
   </div>
 </template>
+
+<script setup>
+const props = defineProps(['monthlyPay']);
+
+console.log(props.monthlyPay);
+</script>
 
 <style>
 .result {
